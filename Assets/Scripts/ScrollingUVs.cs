@@ -12,9 +12,9 @@ public class ScrollingUVs : MonoBehaviour
     void LateUpdate() 
     {
         uvOffset += ( uvAnimationRate * Time.deltaTime );
-        if( renderer.enabled )
+        if( GetComponent<Renderer>().enabled )
         {
-            renderer.materials[ materialIndex ].SetTextureOffset( textureName, uvOffset );
+            GetComponent<Renderer>().materials[ materialIndex ].SetTextureOffset( textureName, uvOffset );
 		}
 	}
 }

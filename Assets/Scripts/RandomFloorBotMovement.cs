@@ -10,7 +10,7 @@ public class RandomFloorBotMovement : MonoBehaviour
 	public Vector2 newSpeedTimeVariance;
 	
 	
-	private NavMeshAgent nav;
+	private UnityEngine.AI.NavMeshAgent nav;
 	private float newDestinationTime;
 	private float destinationTimer;
 	private float newSpeedTime;
@@ -19,7 +19,7 @@ public class RandomFloorBotMovement : MonoBehaviour
 	
 	void Awake ()
 	{
-		nav = GetComponent<NavMeshAgent>();
+		nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		SetRandomDestination();
 		SetRandomSpeed();
 	}

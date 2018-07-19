@@ -7,6 +7,6 @@ public class AudioOffset : MonoBehaviour
 	{
 		Random.seed = System.DateTime.Now.Millisecond;
 		yield return new WaitForSeconds(Random.Range(0f, 1.5f));
-		audio.Play();
+		GetComponent<AudioSource>().Play();
 	}
 }
