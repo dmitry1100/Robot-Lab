@@ -106,7 +106,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 1
-    cellSize: 0.0139999995
+    cellSize: 0.088
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
