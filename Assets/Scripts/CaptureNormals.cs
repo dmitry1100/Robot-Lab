@@ -9,15 +9,7 @@ public class CaptureNormals : MonoBehaviour
     {
         if(!mat)
         {
-            mat = new Material("Shader \"Hidden/SetAlpha\" {" +
-            "SubShader {" +
-            "    Pass {" +
-            "        ZTest Always Cull Off ZWrite Off" +
-            "        SetTexture [_CameraNormalsTexture] { combine texture } " +
-            "   } " +
-            "   }" +
-            "}"
-            );
+            mat = new Material(Shader.Find("Hidden/SetAlpha"));
         }
 
 
