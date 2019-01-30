@@ -4,15 +4,15 @@ Properties {
 	_SpecColor ("Specular Color", Color) = (0.5, 0.5, 0.5, 0)
 	_Shininess ("Shininess", Range (0.01, 1)) = 0.078125
 	_ReflectColor ("Reflection Color", Color) = (1,1,1,0.5)
-	_MainTex ("Base (RGB) RefStrength+Gloss (A)", 2D) = "white" {} 
-	_Cube ("Reflection Cubemap", Cube) = "_Skybox" { TexGen CubeReflect }
+	_MainTex ("Base (RGB) RefStrength+Gloss (A)", 2D) = "white" {}
+	_Cube ("Reflection Cubemap", Cube) = "_Skybox" { /* TexGen CubeReflect */ }
 }
 SubShader {
 	LOD 300
 	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transperant" }
-	
+
 CGPROGRAM
-#pragma surface surf BlinnPhong alpha
+#pragma surface surf BlinnPhong alpha vertex:vert
 
 sampler2D _MainTex;
 samplerCUBE _Cube;
@@ -26,6 +26,17 @@ struct Input {
 	float3 worldRefl;
 };
 
+void vert (inout appdata_full v, out Input o) {
+	UNITY_INITIALIZE_OUTPUT(Input, o);
+
+	// TexGen CubeReflect:
+	// reflect view direction along the normal,
+	// in view space
+	float3 viewDir = normalize(ObjSpaceViewDir(v.vertex));
+	o.worldRefl = reflect(-viewDir, v.normal);
+	o.worldRefl = UnityObjectToViewPos(o.worldRefl);
+}
+
 void surf (Input IN, inout SurfaceOutput o) {
 	fixed4 tex = tex2D(_MainTex, IN.uv_MainTex);
 	fixed4 c = tex * _Color;
@@ -36,10 +47,10 @@ void surf (Input IN, inout SurfaceOutput o) {
 	o.Alpha = _Color.a;
 	o.Specular = _Shininess;
 	o.Emission = reflcol.rgb * _ReflectColor.rgb * tex.a;
-	
+
 }
 ENDCG
 }
-	
+
 FallBack "Reflective/VertexLit"
-} 
+}
